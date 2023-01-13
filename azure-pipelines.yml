@@ -22,18 +22,19 @@ steps:
     echo "list keys:"
     gpg --list-keys
     echo "importing key:"
-    echo $GPG_PRIVATE_KEY | gpg --batch --import
+    # Pipeline variables do not preserve line ends so we use base64 as a workaround.
+    echo $GPG_PRIVATE_KEY_BASE64 | base64 -d | gpg --batch --import
     echo "list keys after import:"
     gpg --list-keys
     echo "running agent after import:"
     ps ax | grep gpg
   env:
-   GPG_PRIVATE_KEY: $(GPG_PRIVATE_KEY) # secret variable has to be mapped to an env variable
+   GPG_PRIVATE_KEY_BASE64: $(GPG_PRIVATE_KEY_BASE64) # secret variable has to be mapped to an env variable
   displayName: "Import gpg key"
 
 - bash: ./scripts/download_driver_for_all_platforms.sh
 
-- bash: mvn -B deploy -D skipTests --no-transfer-progress --settings maven-settings.xml -D gpg.passphrase=$GPG_PASSPHRASE
+- bash: mvn -B deploy -D skipTests --no-transfer-progress --activate-profiles release --settings maven-settings.xml -D gpg.passphrase=$GPG_PASSPHRASE
   displayName: 'Deploy'
   env:
     ADO_USERNAME: $(ADO_USERNAME)
