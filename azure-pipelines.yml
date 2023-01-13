@@ -21,6 +21,8 @@ steps:
 
 - bash: mvn -B deploy -D skipTests --no-transfer-progress --activate-profiles release -D gpg.passphrase=$GPG_PASSPHRASE -DaltDeploymentRepository=snapshot-repo::default::file:$(pwd)/local-build
   displayName: 'Build and deploy to a local directory'
+  env:
+    GPG_PASSPHRASE: $(GPG_PASSPHRASE) # secret variable has to be mapped to an env variable
 
 - bash: |
     for file in $(find snapshots -type f); do
