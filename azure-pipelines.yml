@@ -34,11 +34,10 @@ steps:
 
 - bash: ./scripts/download_driver_for_all_platforms.sh
 
-- displayName: 'Build and deploy to a local directory'
-  bash: mvn -B deploy -D skipTests --no-transfer-progress --activate-profiles release -DaltDeploymentRepository=snapshot-repo::default::file:$(pwd)/local-build
+- bash: mvn -B deploy -D skipTests --no-transfer-progress --activate-profiles release -DaltDeploymentRepository=snapshot-repo::default::file:$(pwd)/local-build
+  displayName: 'Build and deploy to a local directory'
 
-- displayName: 'Create .sha256 files'
-  bash: |
+- bash: |
     for file in $(find snapshots -type f); do
       echo "processing: $file"
       if [[ $file =~ \.(md5|sha1|sha256)$ ]]; then
@@ -46,12 +45,12 @@ steps:
       fi
       sha256sum "$file" | cut -f1 -d \ > "$file.sha256"
     done
+  displayName: 'Create .sha256 files'
 
-- displayName: 'Zip all build artifacts'
-  bash: zip -r build.zip ./local-build
+- bash: zip -r build.zip ./local-build
+  displayName: 'Zip all build artifacts'
 
-- displayName: 'ESRP Release to Maven'
-  task: EsrpRelease@2
+- task: EsrpRelease@2
   inputs:
     ConnectedServiceName: 'Playwright-Java-ESRP'
     Intent: 'PackageDistribution'
@@ -62,10 +61,11 @@ steps:
     ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
     MainPublisher: 'ESRPRELPACMAN'
     DomainTenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47'
+  displayName: 'ESRP Release to Maven'
 
-- displayName: 'Deploy to internal artifacts feed'
-  bash: mvn -B deploy -D skipTests --no-transfer-progress --activate-profiles release --settings maven-settings.xml -D gpg.passphrase=$GPG_PASSPHRASE
+- bash: mvn -B deploy -D skipTests --no-transfer-progress --activate-profiles release --settings maven-settings.xml -D gpg.passphrase=$GPG_PASSPHRASE
   env:
     ADO_USERNAME: $(ADO_USERNAME)
     ADO_PASSWORD: $(ADO_PASSWORD) # secret variable has to be mapped to an env variable
     GPG_PASSPHRASE: $(GPG_PASSPHRASE) # secret variable has to be mapped to an env variable
+  displayName: 'Deploy to internal artifacts feed'
