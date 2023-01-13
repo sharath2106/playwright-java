@@ -17,7 +17,7 @@ steps:
     echo "list keys:"
     gpg --list-keys
     echo "importing key:"
-    echo $GPG_PRIVATE_KEY | base64 -d | gpg --import
+    echo $GPG_PRIVATE_KEY | base64 -d | gpg --batch --import
     echo "list keys after import:"
     gpg --list-keys
   env:
