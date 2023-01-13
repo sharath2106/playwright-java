@@ -14,6 +14,9 @@ steps:
     ADO_PASSWORD: $(ADO_PASSWORD) # secret variable has to be mapped to an env variable
 
 - bash: |
+    echo "gpg version:"
+    gpg --version
+    echo "GPG_TTY: $GPG_TTY"
     echo "list keys:"
     gpg --list-keys
     echo "importing key:"
