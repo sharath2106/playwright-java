@@ -17,6 +17,8 @@ steps:
     echo "gpg version:"
     gpg --version
     echo "GPG_TTY: $GPG_TTY"
+    echo "running agent:"
+    ps ax | grep gpg
     echo "list keys:"
     gpg --list-keys
     echo "importing key:"
