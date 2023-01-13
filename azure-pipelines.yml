@@ -33,7 +33,7 @@ steps:
 
 - bash: ./scripts/download_driver_for_all_platforms.sh
 
-- bash: mvn -B verify gpg:sign deploy -D skipTests --no-transfer-progress --settings maven-settings.xml -D gpg.passphrase=$GPG_PASSPHRASE
+- bash: mvn -B deploy -D skipTests --no-transfer-progress --settings maven-settings.xml -D gpg.passphrase=$GPG_PASSPHRASE
   displayName: 'Deploy'
   env:
     ADO_USERNAME: $(ADO_USERNAME)
