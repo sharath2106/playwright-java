@@ -25,6 +25,8 @@ steps:
     echo $GPG_PRIVATE_KEY | base64 -d | gpg --batch --import
     echo "list keys after import:"
     gpg --list-keys
+    echo "running agent after import:"
+    ps ax | grep gpg
   env:
    GPG_PRIVATE_KEY: $(GPG_PRIVATE_KEY) # secret variable has to be mapped to an env variable
   displayName: "Import gpg key"
