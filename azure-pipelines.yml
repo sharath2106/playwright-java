@@ -34,16 +34,12 @@ steps:
     done
   displayName: 'Create .sha256 files'
 
-- bash: zip -r build.zip ./local-build
-  displayName: 'Zip all build artifacts'
-
-
 - task: EsrpRelease@2
   inputs:
     ConnectedServiceName: 'Playwright-Java-ESRP'
     Intent: 'PackageDistribution'
     ContentType: 'Maven'
-    PackageLocation: 'build.zip'
+    PackageLocation: './local-build'
     Owners: 'yurys@microsoft.com'
     Approvers: 'maxschmitt@microsoft.com'
     ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
