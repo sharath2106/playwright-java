@@ -43,7 +43,7 @@ steps:
     Owners: 'yurys@microsoft.com'
     Approvers: 'maxschmitt@microsoft.com'
     ServiceEndpointUrl: 'https://api.esrp.microsoft.com'
-    MainPublisher: 'ESRPRELPACMAN'
+    MainPublisher: 'Playwright Java'
     DomainTenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47'
   displayName: 'ESRP Release to Maven'
 
