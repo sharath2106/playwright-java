@@ -37,6 +37,7 @@ steps:
 - bash: zip -r build.zip ./local-build
   displayName: 'Zip all build artifacts'
 
+
 - task: EsrpRelease@2
   inputs:
     ConnectedServiceName: 'Playwright-Java-ESRP'
