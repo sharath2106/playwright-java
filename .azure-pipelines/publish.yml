@@ -10,7 +10,7 @@ steps:
     exit 1
   env:
     CURRENT_BRANCH: ${{ variables['Build.SourceBranchName'] }}
-  condition: ${{ not(startsWith(variables['Build.SourceBranchName'], 'release-')) }}
+  condition: ${{ not(startsWith(variables['Build.SourceBranchName'], 'test-snapshot-')) }}
   displayName: "Check the branch is a release branch"
 
 - bash: |
