@@ -5,6 +5,10 @@ pool:
   vmImage: ubuntu-22.04
 
 steps:
+- bash: exit 1
+  condition: ${{ !startsWith(variables['Build.SourceBranchName'], 'release-') }}
+  displayName: "Check the branch is a release branch"
+
 - bash: |
     echo "importing GPG key:"
     # Pipeline variables do not preserve line ends so we use base64 instead of --armored as a workaround.
@@ -34,7 +38,6 @@ steps:
   displayName: 'Create .sha256 files'
 
 - task: EsrpRelease@2
-  condition: ${{ startsWith(variables['Build.SourceBranchName'], 'releases/') }}
   inputs:
     ConnectedServiceName: 'Playwright-Java-ESRP'
     Intent: 'PackageDistribution'
