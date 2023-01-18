@@ -5,7 +5,11 @@ pool:
   vmImage: ubuntu-22.04
 
 steps:
-- bash: exit 1
+- bash: |
+    echo "Can only publish from a release branch. Unexpected branch name: $CURRENT_BRANCH"
+    exit 1
+  env:
+    CURRENT_BRANCH: ${{ variables['Build.SourceBranchName'] }}
   condition: ${{ not(startsWith(variables['Build.SourceBranchName'], 'release-')) }}
   displayName: "Check the branch is a release branch"
 
