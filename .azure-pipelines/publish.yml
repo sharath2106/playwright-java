@@ -6,7 +6,7 @@ pool:
 
 steps:
 - bash: |
-    if [[ ! "$CURRENT_BRANCH" =~ ^release-.* ]]; then
+    if [[ ! "$CURRENT_BRANCH" =~ ^test-snapshot-.* ]]; then
       echo "Can only publish from a release branch."
       echo "Unexpected branch name: $CURRENT_BRANCH"
       exit 1
