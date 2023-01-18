@@ -34,6 +34,7 @@ steps:
   displayName: 'Create .sha256 files'
 
 - task: EsrpRelease@2
+  condition: ${{ startsWith(variables['Build.SourceBranchName'], 'releases/') }}
   inputs:
     ConnectedServiceName: 'Playwright-Java-ESRP'
     Intent: 'PackageDistribution'
