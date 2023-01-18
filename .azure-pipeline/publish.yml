@@ -6,7 +6,7 @@ pool:
 
 steps:
 - bash: exit 1
-  condition: ${{ !startsWith(variables['Build.SourceBranchName'], 'release-') }}
+  condition: ${{ not(startsWith(variables['Build.SourceBranchName'], 'release-')) }}
   displayName: "Check the branch is a release branch"
 
 - bash: |
