@@ -1,13 +1,12 @@
 trigger:
-- main
-- test-snapshot-feed
+  none
 
 pool:
   vmImage: ubuntu-22.04
 
 steps:
 - bash: |
-    echo "importing key:"
+    echo "importing GPG key:"
     # Pipeline variables do not preserve line ends so we use base64 instead of --armored as a workaround.
     echo $GPG_PRIVATE_KEY_BASE64 | base64 -d | gpg --batch --import
     echo "list keys after import:"
@@ -46,10 +45,3 @@ steps:
     MainPublisher: 'PlaywrightJava'
     DomainTenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47'
   displayName: 'ESRP Release to Maven'
-
-- bash: mvn -B deploy -D skipTests --no-transfer-progress --activate-profiles release -D gpg.passphrase=$GPG_PASSPHRASE --settings maven-settings.xml
-  env:
-    ADO_USERNAME: $(ADO_USERNAME)
-    ADO_PASSWORD: $(ADO_PASSWORD) # secret variable has to be mapped to an env variable
-    GPG_PASSPHRASE: $(GPG_PASSPHRASE) # secret variable has to be mapped to an env variable
-  displayName: 'Deploy to internal artifacts feed'
